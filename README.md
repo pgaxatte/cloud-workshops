@@ -5,14 +5,20 @@ The workshops are organized as follows:
 1. **Day 1**: simple two-tier application deployment
     - [**01a**](01_simple_app/01a_manage_instances.md): boot an instance, start using it and
         delete it
-    - [**01b**](01_simple_app/01b_):
-    - [**01c**](01_simple_app/01c_):
+    - [**01b**](01_simple_app/01b_manage_volumes.md): create a volume, attach and detach it
+    - [**01c**](01_simple_app/01c_manage_networks_and_ports.md): create a private network and use it
+    - [**01d**](01_simple_app/01d_deploy_app_manual.md): deploy a simple two-tier application
+    - [**01e**](01_simple_app/01d_deploy_app_userdata.md): deploy the same app using userdata
+    - [**01f**](01_simple_app/01e_manage_security.md): create security groups and rules
+
 
 # Prerequisites
+
 ## For guided labs
 Before beginning the workshops, the following elements should have been communicated to you:
 - the address of the lab server
 - the password of the lab user (named `student`)
+
 
 ### Connect to the container
 With this information you can connect to the bounce server:
@@ -23,6 +29,7 @@ ssh student@XXX.XXX.XXX.XXX
 Follow the instructions by providing a username of your choice.
 
 You are now logged in.
+
 
 ### Load the credentials
 Load the credentials contained in the `openrc` file to access your cloud project:
@@ -38,6 +45,7 @@ Missing value auth-url required for auth plugin password
 ```
 It probably means you forgot to load your credentials.
 
+
 ## For other usage
 For anyone else wanting to try this, you need:
 - a valid OVH Public Cloud project
@@ -45,6 +53,7 @@ For anyone else wanting to try this, you need:
 - an openrc file for this user
 - a terminal with the `openstack` CLI installed or use the terminal app integrated in the OVH
 manager.
+
 
 # OpenStack command line interface
 

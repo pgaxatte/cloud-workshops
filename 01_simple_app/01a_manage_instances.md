@@ -237,15 +237,25 @@ Make sure the instance is deleted by listing the instances on your project:
 openstack server list
 ```
 
+This should return an empty list after some time (if you are quick enough you should still see the
+instance as `ACTIVE` for a few moments).
+
+
 # You're up
 
 Now, you should have enough information to complete the following tasks:
 - :exclamation: **Task 1**: Find a compute-intensive flavor (named `cX-X`) with 2 vCPUs and 7 GB of
     RAM
-- :exclamation: **Task 2**: Create a new instance named `web01` using a `Debian 10` image
-- :exclamation: **Task 3**: Connect to the instance and **note down the result of this command**:
+- :exclamation: **Task 2**: Create **two** new instances named `vm01` and `vm02` using a `Debian 10` image
+- :exclamation: **Task 3**: List the instances and check they are becoming active
+- :exclamation: **EVALUATION**: Connect to **each** of them and run the following command to check you did
+    everything right:
 ```shell
-uname -r
+# From the first VM
+debian@vm01:~$ curl -sL https://{{WORKSHOP_SERVER}}/01a.sh | sh
+
+# And from the second one
+debian@vm02:~$ curl -sL https://{{WORKSHOP_SERVER}}/01a.sh | sh
 ```
 
-Once this is done, proceed to the [next course](01b_deploy_simple_app.md)
+Once this is done, proceed to the [next course](01b_manage_volumes.md)
