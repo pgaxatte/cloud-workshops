@@ -240,16 +240,15 @@ Now, using this ID, we can add it to an instance:
 openstack server add port vm01 c695b5d8-...
 ```
 
-Since we hotplugged the port, we need to tell the OS (Debian 10 here) to use the interface.
-So, connect to `vm01` and enable the new interface:
+The OS (Debian 10 here) should be able to use the new interface right away by sending a DHCP request.
+Let's make sure of it by connecting to `vm01` and checking the interface is up and well configured:
 ```
-# With the public IP address of vm02
+# With the public IP address of vm01
 $ ssh debian@XXX.XXX.XXX.XXX
 [...]
 debian@vm01:~$
 
-# Check that you see two interfaces (three if you count the loopback...) and only one has an
-# IP address:
+# Check that you see two interfaces (three if you count the loopback...)
 debian@vm01:~$ ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -268,11 +267,14 @@ debian@vm01:~$ ip addr show
     inet6 fe80::f816:3eff:fe48:4146/64 scope link
        valid_lft forever preferred_lft forever
 
-# Run a DHCP client on the eth1 interface
-debian@vm01:~$ sudo dhclient eth1
-
-# It should now be up with the correct IP
+# If eth1 does not have an IP address, wait a bit until you see one appear.
 debian@vm01:~$ ip a s eth1
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:48:41:46 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.100/24 brd 10.0.0.255 scope global dynamic eth1
+       valid_lft 86398sec preferred_lft 86398sec
+    inet6 fe80::f816:3eff:fe48:4146/64 scope link
+       valid_lft forever preferred_lft forever
 
 # (yeah you can abbreviate the ip commands...)
 ```
@@ -330,5 +332,4 @@ debian@vm01:~$ curl -sL https://{{WORKSHOP_SERVER}}/01c.sh | sh
 debian@vm02:~$ curl -sL https://{{WORKSHOP_SERVER}}/01c.sh | sh
 ```
 
-Once you are ready, move on to the [next course](01d_deploy_app.md).
-
+Once you are ready, move on to the [next course](01d_deploy_app_manual.md).
