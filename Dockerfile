@@ -1,9 +1,6 @@
 FROM python:slim AS builder
-
 ADD . /docs
-
 WORKDIR /docs
-
 RUN apt-get update \
     && apt-get install --no-install-recommends -y make \
     && python3 -m pip install --no-cache-dir -U pip \
