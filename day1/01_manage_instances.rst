@@ -52,6 +52,7 @@ Let's list the available images using the following command:
     openstack image list
 
 This will output a long table with the names and IDs of the available images:
+
 ::
 
     +--------------------------------------+---------------------------------------------+--------+
@@ -88,6 +89,7 @@ flavor in the list displayed by the following command:
     openstack flavor list
 
 The resulting output will be something similar to this:
+
 ::
 
     +--------------------------------------+-----------------+--------+------+-----------+-------+-----------+
@@ -109,6 +111,7 @@ flavor:
     openstack flavor list --sort-column VCPUs | head
 
 This outputs:
+
 ::
 
     +--------------------------------------+-----------------+--------+------+-----------+-------+-----------+
@@ -147,6 +150,7 @@ following command:
     openstack server create --image 'Debian 9' --flavor s1-4 --key-name mykey myvm01
 
 This will output some information about the VM being started:
+
 ::
 
     +-----------------------------+-----------------------------------------------------+
@@ -194,6 +198,7 @@ You can run this command to check the progress of the VM:
     openstack server show 369ad246-8c48-40f9-ada1-269c0844b34c
 
 When the instance is ready you will see something similar to this:
+
 ::
 
     +-----------------------------+----------------------------------------------------------+
