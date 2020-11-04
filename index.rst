@@ -10,6 +10,8 @@ OpenStack).
    :caption: Workshop list:
 
    day1/index
+   day2/index
+   day3/index
 
 
 Introduction
