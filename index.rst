@@ -1,33 +1,22 @@
 Cloud Workshops on OpenStack @OVHcloud
 ======================================
 
-This is a collection of workshops to learn how to use OpenStack on OVH Public
-Cloud (although it can be adapted easily to different cloud provider using
-OpenStack).
+This website hosts a collection of workshops to learn how to use OpenStack on
+OVH Public Cloud (although it can be adapted easily to different cloud provider
+using OpenStack).
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Workshop list:
+.. note::
 
-   day1/index
-   day2/index
-   day3/index
+    Before beginning the workshops, the following elements should have been communicated to you:
 
-
-Introduction
-=============
-
-
-Before beginning the workshops, the following elements should have been communicated to you:
-
-* the address of the lab server
-* the password of the lab user (named ``student``)
+    * the address of the lab server
+    * the password of the lab user (named ``student``)
 
 
 Connect to the container
 ------------------------
 
-With this information you can connect to the bounce server:
+With this information you can connect to the lab server:
 
 .. code:: shell
 
@@ -35,7 +24,7 @@ With this information you can connect to the bounce server:
 
 Follow the instructions by providing a username of your choice.
 
-**You are now logged in.**
+**You are now logged into your personal container.**
 
 
 Load the credentials
@@ -47,8 +36,8 @@ Load the credentials contained in the ``openrc`` file to access your cloud proje
 
     source openrc
 
-**Congratulations!** You are now ready to use OpenStack and complete the workshops.
-
+**You have now loaded the credentials enabling you to use OpenStack and
+complete the workshops.**
 
 .. warning::
     If, during the workshop, you see this message::
@@ -58,7 +47,7 @@ Load the credentials contained in the ``openrc`` file to access your cloud proje
     It probably means you forgot to load your credentials.
 
 Conventions
-===========
+-----------
 
 Throughout the workshop you will encounter blocks of code instructing you to
 execute certain commands.
@@ -72,11 +61,11 @@ Please pay attention to the prompt (the start of the line):
         # This is a comment, do not execute this
 
 * If there is no prompt at the start of the line or just a single ``$``: you
-  must run this command from the bounce server directly
+  must run this command from the lab server directly
 
     .. code:: shell
 
-        # This command is to be run from the bounce server:
+        # This command is to be run from the lab server:
         echo "This is a test"
 
         # This one two, without the leading `$`
@@ -94,7 +83,7 @@ Please pay attention to the prompt (the start of the line):
       debian@vm02:~$ echo "Hello from vm02"
 
 OpenStack command line interface
-================================
+--------------------------------
 
 OpenStack is a collection of projects providing an API to manage cloud infrastructure. Each project
 has its own API but the community maintains a common command line tool able to manage any part of
@@ -141,3 +130,14 @@ Then you have help on the actions like so:
 
     openstack {resource} {action} --help
 
+Let's start
+-----------
+
+You are now ready to complete the workshop:
+
+.. toctree::
+   :maxdepth: 1
+
+   day1/index
+   day2/index
+   day3/index

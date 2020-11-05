@@ -288,7 +288,7 @@ Let's add a new group and rules for HTTP but limited to specific IPs:
 
 .. admonition:: Task 3
 
-    Validate you can now connect to vm01 using HTTP from the bounce server
+    Validate you can now connect to vm01 using HTTP from the lab server
     (using curl) and verify you cannot connect to it from a different machine
     (using your browser on your workstation).
 
