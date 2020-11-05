@@ -1,8 +1,7 @@
-Cloud Workshops on OpenStack @OVHcloud
-======================================
+Cloud Workshops on OpenStack and VMware @OVHcloud
+=================================================
 
-This is a collection of workshops to learn how to use OpenStack on OVH Public
-Cloud (although it can be adapted easily to different cloud provider using
+This is a collection of workshops to learn how to use OpenStack and VMware on OVH Public and Private Clouds (although it can be adapted easily to different cloud provider using
 OpenStack).
 
 .. toctree::
@@ -18,7 +17,7 @@ Introduction
 =============
 
 
-Before beginning the workshops, the following elements should have been communicated to you:
+Before beginning the workshops, the following elements should have been communicated to you :
 
 * the address of the lab server
 * the password of the lab user (named ``student``)
