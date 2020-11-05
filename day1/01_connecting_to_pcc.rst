@@ -12,11 +12,10 @@ Just follow the steps discribed here :
 
 https://docs.ovh.com/fr/private-cloud/connexion-interface-vsphere/
 
-*Notes :*
+.. note::
 
-- You might prefer to use the HTML5 interface to prevent any Flash concern.
-
-- You may have a slightly different interface depending of the version of your PCC.
+        - You might prefer to use the HTML5 interface to prevent any Flash concern.
+        - You may have a slightly different interface depending of the version of your PCC.
 
 Checking VMware High-Availability
 ------------------------
