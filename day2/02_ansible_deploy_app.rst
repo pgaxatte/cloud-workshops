@@ -8,7 +8,9 @@ Build your inventory
 
 First step to work with Ansible is to define your inventory.
 
-*Note : as we won't use any DNS service or SSH user configuration for this workshop, we will provide some information directly into the Ansible inventory, such as your machines IPs, the user to connect to, and the SSH port to use.*
+.. note::
+
+        As we won't use any DNS service or SSH user configuration for this workshop, we will provide some information directly into the Ansible inventory, such as your machines IPs, the user to connect to, and the SSH port to use.
 
 .. code:: shell
 
@@ -59,7 +61,9 @@ Finally, our machines will have different roles in our infrastructure, so it wou
 When you will execute a playbook against this inventory, it will compute every groups and variables dynamically : that way, you machine *db1*, as part of group *database_server*, is also part of the group *ema*, and then will benefit from the *ema* specific variables.
 Adding a new machine in the *database_server* group will make it also benefit from the same variables.
 
-*Note : as you can see, it is easy to build an inventory with Ansible, but it can also become a real puzzle if you have dozens or thousands of machines, splitted in many groups or sub-groups. Building a valid inventory can be difficult, and managing it on a day-to-day basis can lead to mistakes : you will quickly need some automation to build it from a CMDB.*
+.. note::
+
+        As you can see, it is easy to build an inventory with Ansible, but it can also become a real puzzle if you have dozens or thousands of machines, splitted in many groups or sub-groups. Building a valid inventory can be difficult, and managing it on a day-to-day basis can lead to mistakes : you will quickly need some automation to build it from a CMDB.
 
 Now we have our inventory, it's time to test it ! To do so, we will use the *ping* Ansible module, which will try to connect to your machines using the inventory information, and detect if a valid Python environnement is present. In our case, we specify we want to test it against the group *ema* :
 
@@ -134,7 +138,7 @@ The first missing part is related to the *admins* role :
             name: "{{ item.username }}"
           with_items: "{{ admins }}"
           loop_control:
-              label: "{{ item.name }}"
+              label: "{{ item.username }}"
 
         [...]
 
@@ -151,8 +155,7 @@ In this small extract, you can see that this step is looking for a *admins* vari
         admins:
 
         old_admins:
-          - name: Toto
-            username: toto
+          - username: toto
             ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6z7BUPAKbv2R9NvrfmQN8m/8VVvXXl8sc0L73PYYXi toto@toto-computer"
 
 .. admonition:: Admin username and SSH key configuration
