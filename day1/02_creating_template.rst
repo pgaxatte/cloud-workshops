@@ -66,7 +66,7 @@ Now, *from your workshop dedicated environnement*, connect to your template :
 
     ~# ssh root@145.239.217.1
 
-We have two things to do : make your IP configuration persistent, and change the SSH port to limit problems.
+Next step : make your IP configuration persistent.
 
 Make IP configuration persistent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -129,46 +129,18 @@ Again, to limit problems (we will deactivate root login later with Ansible, but 
         - Please use a strong password, and note it carefully.
         - Keeping your first SSH connection open, try to open a new one to test your new password.
 
-Change SSH port
-^^^^^^^^^^^^^^^
-
-To limit useless bruteforce attemps, we will also change the SSH port :
-
-.. code:: shell
-
-        ~# vim /etc/ssh/sshd_config
-
-Please provide a valid port number you want to use :
-
-.. code:: shell
-
-        [...]
-        Port XXXXX
-        [...]
-
-And restart your SSH daemon :
-
-.. code:: shell
-
-        ~# /etc/init.d/ssh restart
-
-.. note::
-
-        - Please note the port you chose carefully.
-        - Again, keeping your first SSH connection open, try to open a new one to test your new password.
-
 Validate your template configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. admonition:: Check your template is reboot-proof
 
-        When your SSH and IP configurations are correct, reboot your machine. After reboot, we must be able to connect again with SSH, through your custom SSH port and with your new root password.
+        When your SSH and IP configurations are correct, reboot your machine. After reboot, we must be able to connect again with SSH and your new root password.
 
 
 Snapshot and poweroff your template
 -----------------------------------
 
-When your template is ready (you can connect to it with SSH, on your specific SSH port, and it is reboot-proof), you can power it off for now (typing *poweroff* in its shell or from the VMware console) :
+When your template is ready (you can connect to it with SSH and it is reboot-proof), you can power it off for now (typing *poweroff* in its shell or from the VMware console) :
 
 .. image:: images/poweroff.png
 
