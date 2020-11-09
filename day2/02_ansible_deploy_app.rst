@@ -1,7 +1,16 @@
 Deploy a simple application with Ansible
 ========================================
 
-In your workdir, you should have a folder named "ansible".
+Retrieve your Ansible base repository
+-------------------------------------
+
+You won't start from scratch, let's clone a basic structure :
+
+.. code:: shell
+        
+        $ git clone https://XXXXX.git
+        $ cd ansible
+
 
 Build your inventory
 --------------------
@@ -20,7 +29,7 @@ For this first part, we will work with two machines : *db1* and *web1*.
 
 A first basic attempt would be :
 
-.. code:: shell
+.. code:: ini
 
         [project1]
         db1 ansible_host=XX.XX.XX.XX ansible_user=XXXXX
@@ -28,7 +37,7 @@ A first basic attempt would be :
 
 As you can see, we define in the inventory the IP of each machine and the user to connect to. But, the more the machines, the more duplicated information. Let's factorize a little :
 
-.. code:: shell
+.. code:: ini
 
         [project1]
         db1 ansible_host=XX.XX.XX.XX
@@ -41,7 +50,7 @@ Here, every machine from the *project1* group will inherit the *ansible_user* va
 
 Finally, our machines will have different roles in our infrastructure, so it would be better to split them in more specific groups :
 
-.. code:: shell
+.. code:: ini
 
         [database_server]
         db1 ansible_host=XX.XX.XX.XX
@@ -54,7 +63,6 @@ Finally, our machines will have different roles in our infrastructure, so it wou
         web_server
 
         [project1:vars]
-        ansible_port=XXXXX
         ansible_user=XXXXX
 
 When you will execute a playbook against this inventory, it will compute every groups and variables dynamically : that way, you machine *db1*, as part of group *database_server*, is also part of the group *project1*, and then will benefit from the *project1* specific variables.
@@ -302,12 +310,12 @@ Our goal for this project is to deploy a fresh Wordpress plateform. To achieve t
 - a database (we will use MySQL/MariaDB)
 - a Wordpress installation
 
-We could create a single playbook to manage all these steps, but we want our automation to be as generic as possible and reusable (if we have other projects requiring a web or database server).
+We could create a single playbook to manage all these steps, but we want our automation to be as generic and reusable as possible (if we have other projects requiring a web or database server).
 
 So we will create 3 roles :
 
 - *apache*, which will deploy a basic Apache2 + PHP7.2 instance
-- *mysql-server*, which will a fresh installation and secure it a little bit
+- *mysql-server*, which will deploy a fresh installation and secure it a little bit
 - *wordpress*, which will deploy an instance of this CMS across our web and db machines
 
 Deploying Apache
@@ -486,6 +494,10 @@ Server
 
 In the *server.yml* part, we need to install the required packages.
 
+.. code:: shell
+
+        $ vim roles/mysql-server/tasks/server.yml
+
 .. admonition:: Install MySQL required packages
 
         Based on the *apache* example, complete the first step to deploy the following packages :
@@ -497,6 +509,10 @@ In the *server.yml* part, we need to install the required packages.
         - 'mariadb-server'
 
 You will notice in the third step that we have a *notify* statement, because we could have some MySQL configuration changes.
+
+.. code:: shell
+
+        $ vim roles/mysql-server/handlers/main.yml
 
 .. admonition:: Implement MySQL handler
 
@@ -518,9 +534,9 @@ Last but not least, you may notice that a *mysql_root_password* variable is requ
 Backups
 ~~~~~~~
 
-The other task concerns the deployment of *automysqlbackup*, a small script which will handle dumps and their rotation in a dedicated foler.
+The other task is about the deployment of *automysqlbackup*, a small script which will handle dumps and their rotation in a dedicated folder.
 
-If you look inside the *defaults* folder of the role, we will see some variables :
+If you look inside the *defaults* folder of the role, you will see some variables :
 
 .. code:: yaml
 
@@ -531,6 +547,10 @@ If you look inside the *defaults* folder of the role, we will see some variables
         mysql_backups_directory: /var/backups/automysqlbackup
 
 These variables will be used in the *automysqlserver* configuration template.
+
+.. code:: shell
+
+        $ vim roles/mysql-server/templates/automysqlbackup.conf.j2
 
 .. admonition:: Integrate *automysqlserver* variables
 
@@ -544,7 +564,21 @@ These variables will be used in the *automysqlserver* configuration template.
 MySQL playbook
 ~~~~~~~~~~~~~~
 
-Last step, we need a playbook to call our role :
+Last step, we need a playbook to call our role. First, let's check our role is calling both our *server* and *backups* sub-tasks :
+
+.. code:: shell
+
+        $ cat roles/mysql-server/tasks/main.yml
+
+.. code:: yaml
+
+        ---
+
+        - include: server.yml
+
+        - include: backups.yml
+
+That looks good. Let's create the according playbook :
 
 .. code:: shell
 
@@ -697,4 +731,266 @@ Deploying Wordpress
 
 We have a web server, we have a database server : time to Wordpress !
 
+The same way we imported a pre-made *mysql-server* role, we will copy a *wordpress* one :
 
+.. code:: shell
+
+        $ cd /tmp
+        $ wget https://XXXXXXX/wordpress.tar.gz
+        $ tar -xzf wordpress.tar.gz
+        $ mv wordpress ~/ansible/roles/
+        $ cd ~/ansible/roles/
+
+Deploying a Wordpress is a 2-steps operation : a database, and the CMS itself. Again, to make things clear, we will split it in 2 subtasks.
+
+Database part
+~~~~~~~~~~~~~
+
+The *tasks/db.yml* is already provided, but again we need some variables.
+
+.. code:: shell
+
+        $ vim roles/wordpress/defaults/main.yml
+
+.. admonition:: Provide default Wordpress database variables
+
+        We want the following variables to be defined :
+
+        - a *mysql_wordpress_username* with the value *wordpress*
+        - a *mysql_wordpress_database_name* with the value *wordpress*
+        - a *mysql_wordpress_password* with the value *insecurewppass*
+
+Web part
+~~~~~~~~
+
+If we look at *tasks/web.yml*, we can see that some parts are missing.
+
+.. code:: shell
+
+        $ vim roles/wordpress/tasks/web.yml
+
+.. admonition:: Copy the Wordpress configuration template
+
+        A *templates/wp-config.php.j2* file is provided. You need to copy it to your server, according to the following parameters :
+
+        - destination directory is */var/www/wordpress*
+        - you file must meet the *rw-------* access rights
+        - and it must be owned by the user *www-data*
+
+        We already used a module to do it earlier. You should have a look into your roles.
+
+.. admonition:: Activate the *rewrite* module
+
+        Your Wordpress need the Apache *rewrite* module to be activated. You need to look at the Ansible documatation available at https://docs.ansible.com/ to find the right module and syntax.
+
+        **Do not forget that this step should ask for an Apache restart if something change !**
+
+Puzzle time !
+~~~~~~~~~~~~~
+
+Now our 2 subtasks are ready, we need to glue them together :
+
+.. code:: shell
+
+        $ cat roles/wordpress/tasks/main.yml
+
+.. code:: yaml
+
+        ---
+
+        - name: create wordpress database
+          include: db.yml
+          when: "'database_server' in group_names"
+
+        - name: deploy wordpress CMS
+          include: web.yml
+          when: "'web_server' in group_names"
+
+As you can see, this role will call the *db.yml* and *web.yml* subtasks on the right groups.
+
+Do you remember the *wp-config.php* template we will deploy ? Well, if you look at it you will see that it requires a *wordpress_database* variable we didn't create anywhere ; the same way, if you carefully look the *roles/db.yml* subtask, you will see that a *wordpress_webserver* variable is also required.
+
+These variables are the ones we will use to create a database only available for our webserver, and that we will provide to our Wordpress to tell it which database to use.
+
+In this context, it could make sense to define them as *group_vars*, as they should not be the defaults variables for this role (to make it generic).
+
+.. admonition:: Still more variables
+
+        You need to provide the following variables as *group_vars* variables :
+
+        - *wordpress_database* with the private IP of your database as value
+        - *wordpress_webserver* with the private IP of your webserver as value
+
+Finally, the ultimate puzzle : the deployment playbook.
+
+First, we will create a simple *wordpress* playbook :
+
+.. code:: shell
+
+        $ vim playbooks/wordpress.yml
+
+.. code:: yaml
+
+        - hosts:
+            - wordpress
+
+          become: yes
+
+          roles:
+            - wordpress
+
+Now, the last step : the playbook which will handle our others playbooks.
+
+.. code:: shell
+
+        $ vim playbooks/deploy-wordpress.yml
+
+.. code:: yaml
+
+        ---
+
+        - include: mysql.yml
+
+        - include: apache.yml
+
+        - include: wordpress.yml
+
+When you have completed all the previous steps and your *deploy-wordpress.yml* playbook is ready, have a breath (you deserve it).
+
+Let's resume what will happen here :
+
+- First, we call the *mysql.yml* playbook, which will deploy the *mysql-server* role agasint all the corresponding machines. As we already did it, it shouldn't change anything.
+- Next, we call the *apache.yml*. Same thing.
+- To finish, we call our new *wordpress.yml*, which will create the required database for our project, then copy the last available Wordpress version to our web server, configure Apache to serve it and our Wordpress to work with the right fresh new database.
+
+.. note::
+
+        The way we built our project, we can now periodically run our *apache.yml* and *mysql.yml* playbooks to ensure our database and web servers are fully deployed, and with the right configurations.
+
+        We can also run our *deploy-wordpress.yml* as a one-time operation, and we will be sure that our CMS is deployed over an up-to-date and ready plateform.
+
+Ok, that sounds good. Let's try !
+
+.. code:: shell
+
+        $ ansible-playbook playbooks/deploy-wordpress.yml -D
+
+        PLAY [database_server] *******************************************************************************
+
+        TASK [Gathering Facts] *******************************************************************************
+        ok: [db1]
+
+        TASK [mysql-server : Install packages] ***************************************************************
+        ok: [db1] => (item=[u'python-mysqldb', u'python-pymysql', u'python3-mysqldb', u'python3-pymysql', u'mariadb-server'])
+
+        TASK [mysql-server : Start and enable the MySQL service] *********************************************
+        ok: [db1]
+
+        TASK [mysql-server : Change MySQL configuration] *****************************************************
+        ok: [db1]
+
+        TASK [mysql-server : update mysql root password for all root accounts] *******************************
+        ok: [db1] => (item=db1)
+        ok: [db1] => (item=127.0.0.1)
+        ok: [db1] => (item=::1)
+        ok: [db1] => (item=localhost)
+
+        TASK [mysql-server : Removes all anonymous user accounts] ********************************************
+        ok: [db1]
+
+        TASK [mysql-server : Removes the MySQL test database] ************************************************
+        ok: [db1]
+
+        TASK [mysql-server : copy .my.cnf file with root password credentials] *******************************
+        ok: [db1]
+
+        TASK [mysql-server : Create automysqlbackup directories] *********************************************
+        ok: [db1] => (item=/var/backups/automysqlbackup)
+        ok: [db1] => (item=/etc/automysqlbackup)
+
+        TASK [mysql-server : Copy automysqlbackup bin and cron] **********************************************
+        ok: [db1] => (item={u'dest': u'/usr/local/bin/automysqlbackup', u'src': u'automysqlbackup.bin', u'mode': u'700'})
+        ok: [db1] => (item={u'dest': u'/etc/cron.d/automysqlbackup', u'src': u'automysqlbackup.cron', u'mode': u'644'})
+
+        TASK [mysql-server : Copy automysqlbackup conf] ******************************************************
+        ok: [db1] => (item={u'dest': u'/etc/automysqlbackup/automysqlbackup.conf', u'src': u'automysqlbackup.conf.j2', u'mode': u'600'})
+
+        PLAY [web_server] ************************************************************************************
+
+        TASK [Gathering Facts] *******************************************************************************
+        ok: [web1]
+
+        TASK [Install apache2 and php7.2] ********************************************************************
+        ok: [web1] => (item=[u'apache2', u'libapache2-mod-php7.2'])
+
+        TASK [apache : Enforcing php security] ***************************************************************
+        ok: [web1] => (item={u'regexp': u'^#?expose_php', u'line': u'expose_php = Off'})
+        ok: [web1] => (item={u'regexp': u'^#?display_errors', u'line': u'display_errors = Off'})
+        ok: [web1] => (item={u'regexp': u'^#?display_startup_errors', u'line': u'display_startup_errors = Off'})
+        ok: [web1] => (item={u'regexp': u'^;?date.timezone', u'line': u'date.timezone = Europe/Paris'})
+
+        PLAY [wordpress] *************************************************************************************
+
+        TASK [Gathering Facts] *******************************************************************************
+        ok: [web1]
+        ok: [db1]
+
+        TASK [wordpress : Create Wordpress mysql database] ***************************************************
+        skipping: [web1]
+        ok: [db1]
+
+        TASK [wordpress : Create Wordpress mysql user] *******************************************************
+        skipping: [web1]
+        ok: [db1]
+
+        TASK [wordpress : Install apache2 and php7.2] ********************************************************
+        skipping: [db1] => (item=[])
+        ok: [web1] => (item=[u'mariadb-client', u'php7.2-cli', u'php7.2-common', u'php7.2-curl', u'php7.2-gd', u'php7.2-intl', u'php7.2-ldap', u'php7.2-mbstring', u'php7.2-mysql', u'php7.2-soap', u'php7.2-xml', u'php7.2-xmlrpc', u'php7.2-zip'])
+
+        TASK [wordpress : Get and extract last Wordpress] ****************************************************
+        skipping: [db1]
+        ok: [web1]
+
+        TASK [wordpress : Copy Wordpress wp-config file] *****************************************************
+        skipping: [db1]
+        ok: [web1]
+
+        TASK [wordpress : Copy Wordpress apache conf files] **************************************************
+        skipping: [db1] => (item={u'dest': u'/etc/apache2/sites-available/wordpress.conf', u'src': u'wordpress.conf', u'mode': u'644'})
+        skipping: [db1] => (item={u'dest': u'/etc/apache2/.htaccess_wordpress', u'src': u'htaccess', u'mode': u'600'})
+        ok: [web1] => (item={u'dest': u'/etc/apache2/sites-available/wordpress.conf', u'src': u'wordpress.conf', u'mode': u'644'})
+        ok: [web1] => (item={u'dest': u'/etc/apache2/.htaccess_wordpress', u'src': u'htaccess', u'mode': u'600'})
+
+        TASK [wordpress : Deactivate default apache conf file] ***********************************************
+        skipping: [db1]
+        ok: [web1]
+
+        TASK [wordpress : Activate Wordpress apache conf file] ***********************************************
+        skipping: [db1]
+        ok: [web1]
+
+        TASK [wordpress : Activate rewrite module] ***********************************************************
+        skipping: [db1]
+        ok: [web1]
+
+        PLAY RECAP *******************************************************************************************
+        db1                        : ok=14   changed=0    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0
+        web1                       : ok=11   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+
+You can now visit your Wordpress ! Go to http://<your public webserver IP>.
+
+.. note::
+
+        As a little security (your Wordpress is not fully configured, and we didn't deploy any SSL configuration), you will be asked for some htaccess credentials : they are available into your *.openrc* file.
+
+You should have the following screen :
+
+.. image:: images/wordpress_install_screen.png
+
+Complete the installation process with some random values, and tadaaaaa :
+
+.. image:: images/wordpress_admin.png
+
+.. image:: images/wordpress_public.png
+
+When your Wordpress deployment is finished, you can go to the :doc:`next course <03_tf_add_backup_infra>`
