@@ -1,8 +1,19 @@
-Day 1: deploy a simple app on two instances
-===========================================
+Day 1 : Discover Private and Public Cloud plateforms
+=====================================================
 
 
-The workshops for day 1 are organized as follows:
+The workshops for day 1 are organized as follows :
+
+**Private Cloud**
+
+.. toctree::
+   :maxdepth: 1
+   :numbered:
+
+   01_connecting_to_pcc
+   02_creating_template
+
+**Public Cloud**
 
 .. toctree::
    :maxdepth: 1
@@ -16,7 +27,7 @@ The workshops for day 1 are organized as follows:
    06_deploy_app_userdata
 
 
-The goal of this first workshop is to guide towards a simple deployment of two
+The goal of this first workshop on Public Cloud is to guide towards a simple deployment of two
 instances using the command-line. These two instances will be connected to the
 internet and between them via a private network. You will also learn how to use
 volumes and manage the security by restricting the access to your instances.

@@ -1,8 +1,8 @@
-Day 2: use Ansible and Terraform
-================================
+Day 2 : Bascis of Ansible and Terraform
+=======================================
 
 
-The workshops for day 2 are organized as follows:
+The workshops for day 2 are organized as follows :
 
 .. toctree::
    :maxdepth: 1
