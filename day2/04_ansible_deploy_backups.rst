@@ -11,18 +11,31 @@ In our case, we will define our fresh new *backup* machine to host our repositor
 
         As you may remember, we deployed an *automysqlbackup* mechanism on our *db1* node, to handle dumps everynight. The crontab we associated with it is set to 12PM, so it would make sense to define our backups right after them, let's say to 1:30AM, to also include the dump of the day.
 
-Update your inventory
----------------------
+Check your inventory
+--------------------
 
-First, we need to add our new server to our inventory :
+In the previous part, you should have generated your Ansible inventory dynamically with Terraform. You should now have something like this (same from part 2 + the new backup server), if this is not the case double check or ask for help :
 
 .. code:: shell
 
-        $ vim inventory/hosts
+        $ cat inventory/hosts
 
 .. code:: ini
 
-        backup ansible_host=<your IP>
+        backup ansible_host=XX.XX.XX.XX
+
+        [database_server]
+        db1 ansible_host=XX.XX.XX.XX
+
+        [web_server]
+        web1 ansible_host=XX.XX.XX.XX
+
+        [wordpress:children]
+        database_server
+        web_server
+
+        [all:vars]
+        ansible_user=student
 
 .. admonition:: Task 1 : Secure your *backup* machine and update your */etc/hosts*
 
@@ -132,7 +145,7 @@ And run it (in this example, we limit the playbook execution to our *backup* mac
 
 .. code:: shell
 
-        $ ansible-playbook playbooks/borgbackup-server.yml -D --limit=backup
+        $ ansible-playbook playbooks/borgbackup.yml -D --limit=backup
 
         PLAY [borgbackup_server] *****************************************************************************
 
@@ -193,7 +206,7 @@ Again, here is the skeleton of our role :
 
 If you look into the *roles/borbackup-client/tasks* folder, you will see that it is splitted in two *.yml* : the *repository.yml* is where the magic will happen, **but**, as we are cautious sysadmins, we would like to have the possibility to configure multiple backup servers for a node later, so the *main.yml* will trigger this subtask as many time as needed (in this workshop, we only have one backup server, though).
 
-Some steps will be executed on the client side, others on the server side : that's the useful role of the *delegate_to* statetement.
+Some steps will be executed on the client side, others on the server side : that's the useful role of the *delegate_to* statement.
 
 A schema could be useful to fully understand what will happen here :
 
@@ -340,7 +353,7 @@ You may want to try it now, no ? SSH to your *web1* machine and try to start a b
 
 .. code:: shell
 
-        root@web1:~# borg create --stats ssh://borg-web1@backup:25312/mnt/backups/web1/borg::backup-{now:%Y-%m-%d} /etc
+        root@web1:~# borg create --stats ssh://borg-web1@backup:25312/mnt/backups/web1/borg::backup-{now:%Y-%m-%d} /etc /var/www /var/backups
         Enter passphrase for key ssh://borg-web1@backup:25312/mnt/backups/web1/borg: 
         ------------------------------------------------------------------------------
         Archive name: backup-2020-11-09
@@ -363,7 +376,7 @@ Ok, looks good. What if we check our repository ?
 
 .. code:: shell
 
-        root@web1:~#borg list ssh://borg-web1@backup:25312/mnt/backups/web1/borg
+        root@web1:~# borg list ssh://borg-web1@backup:25312/mnt/backups/web1/borg
         Enter passphrase for key ssh://borg-web1@backup:25312/mnt/backups/web1/borg: 
         backup-2020-11-09                    Mon, 2020-11-09 09:26:27 [ba3b74932762623ce38c11a720498a4d953b2020ea517058fe411f59fd3f55ad] 
 
