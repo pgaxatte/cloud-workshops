@@ -1,15 +1,24 @@
 Deploy a simple application with Ansible
 ========================================
 
+.. note::
+
+        This workshop is only a quick introduction to understand basic Ansible concepts.
+
+        As Ansible is very flexible, there are dozens methods to structure your automation : again, this workshop is just a basic approach. Some choices are far from perfect, but inted to present you various ways to do things.
+
 Retrieve your Ansible base repository
 -------------------------------------
 
-You won't start from scratch, let's clone a basic structure :
+You won't start from scratch, let's import a basic structure :
 
 .. code:: shell
-        
-        $ git clone https://XXXXX.git
-        $ cd ansible
+
+        $ cd /tmp
+        $ wget https://XXXXXXX/ansible.tar.gz
+        $ tar -xzf ansible.tar.gz
+        $ mv ansible ~/
+        $ cd ~/ansible
 
 
 Build your inventory
@@ -31,22 +40,24 @@ A first basic attempt would be :
 
 .. code:: ini
 
-        [project1]
-        db1 ansible_host=XX.XX.XX.XX ansible_user=XXXXX
-        web1 ansible_host=XX.XX.XX.XX ansible_user=XXXXX
+        db1 ansible_host=XX.XX.XX.XX ansible_user=ubuntu
+        web1 ansible_host=XX.XX.XX.XX ansible_user=ubuntu
 
 As you can see, we define in the inventory the IP of each machine and the user to connect to. But, the more the machines, the more duplicated information. Let's factorize a little :
 
 .. code:: ini
 
-        [project1]
         db1 ansible_host=XX.XX.XX.XX
         web1 ansible_host=XX.XX.XX.XX
 
-        [project1:vars]
-        ansible_user=XXXXX
+        [all:vars]
+        ansible_user=ubuntu
 
-Here, every machine from the *project1* group will inherit the *ansible_user* variable.
+Here, every machine from the *all* group will inherit the *ansible_user* variable.
+
+.. note::
+
+        *all* is a specific group which handle all the machines of your inventory.
 
 Finally, our machines will have different roles in our infrastructure, so it would be better to split them in more specific groups :
 
@@ -58,14 +69,10 @@ Finally, our machines will have different roles in our infrastructure, so it wou
         [web_server]
         web1 ansible_host=XX.XX.XX.XX
 
-        [project1:children]
-        database_server
-        web_server
+        [all:vars]
+        ansible_user=ubuntu
 
-        [project1:vars]
-        ansible_user=XXXXX
-
-When you will execute a playbook against this inventory, it will compute every groups and variables dynamically : that way, you machine *db1*, as part of group *database_server*, is also part of the group *project1*, and then will benefit from the *project1* specific variables.
+When you will execute a playbook against this inventory, it will compute every groups and variables dynamically : that way, you machine *db1*, as part of group *database_server*, is also part of the group *all*, and then will benefit from the *all* specific variables.
 Adding a new machine in the *database_server* group will make it also benefit from the same variables.
 
 .. note::
@@ -74,18 +81,11 @@ Adding a new machine in the *database_server* group will make it also benefit fr
 
 Now we have our inventory, it's time to test it !
 
-To do so, we will use the *ping* Ansible module, which will try to connect to your machines using the inventory information, and detect if a valid Python environnement is present. In our case, we specify we want to test it against the group *project1* :
+To do so, we will use the *ping* Ansible module, which will try to connect to your machines using the inventory information, and detect if a valid Python environnement is present. In our case, we specify we want to test it against the group *all* :
 
 .. code:: shell
 
-        $ ansible -m ping project1
-
-If you need to override the user to connect to, you need to use the *-u* parameter ; if you also need to specify a password, you need to use the *-k* parameter (password will be prompted dynamically).
-
-.. code:: shell
-
-        $ ansible -m ping project1 -u root -k
-        SSH password:
+        $ ansible -m ping all
 
 You should have a result like this :
 
@@ -113,7 +113,7 @@ Before doing anything else, we will run a basic playbook to ensure our SSH or ho
 
 .. code:: shell
 
-        $ vim playbooks/base.yml
+        $ cat playbooks/base.yml
 
 .. code:: yaml
 
@@ -129,13 +129,6 @@ Before doing anything else, we will run a basic playbook to ensure our SSH or ho
 
 As you can see, this playbook will run against all your machines, and use the *admins*, *ssh* and *hostname* roles. You should have a look to them to understand what they do, as **there is a missing part to make them work**.
 
-.. note::
-
-        When running playbooks, we may want to use some useful extra parameters :
-
-        - *-C* (*check*) : many modules handle a dry run mode (not all of them)
-        - *-D* (*diff*) : show any differences introduced by your playbook (can be used with *-C*)
-
 Admin and SSH key configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -143,7 +136,7 @@ The missing part is related to the *admins* role :
 
 .. code:: shell
 
-        $ vim roles/admins/tasks/main.yml
+        $ cat roles/admins/tasks/main.yml
 
 .. code:: yaml
 
@@ -181,13 +174,13 @@ In this small extract, you can see that this step is looking for a *admins* vari
 Let's run !
 ^^^^^^^^^^^
 
-When it's done, let's run our playbook (remember to use *-u* and/or *-k* parameters if required) :
+When it's done, let's run our playbook :
 
 .. code:: shell
 
         $ ansible-playbook playbooks/base.yml -D
 
-        PLAY [project1] *******************************************************************************************
+        PLAY [all] *******************************************************************************************
 
         TASK [Gathering Facts] *******************************************************************************
         ok: [web1]
@@ -299,7 +292,14 @@ As you can see, as some modification has been applied to the SSH configuration, 
 
 .. note::
 
-        Starting from now, you won't be able to connect as *root* anymore. If required, remember to fix your *ansible_user* variable in your inventory to avoid having to specify it manually for each Ansible run.
+        When running playbooks, we may want to use some useful extra parameters :
+
+        - *-C* (*check*) : many modules handle a dry run mode (not all of them)
+        - *-D* (*diff*) : show any differences introduced by your playbook (can be used with *-C*)
+
+.. note::
+
+        Our automation will still use the *ubuntu* user. The *student* user you just created will be used in case you need to connect to your machines for some troubleshooting (as in every standard company).
 
 Deploying our project
 ---------------------
@@ -318,6 +318,12 @@ So we will create 3 roles :
 - *mysql-server*, which will deploy a fresh installation and secure it a little bit
 - *wordpress*, which will deploy an instance of this CMS across our web and db machines
 
+.. note::
+
+        Remember that every automation system should be **as atomic as possible** : the minimalist the code, the better.
+
+        You should create very simple roles for every piece of your infrastructure, and then glue them later according to your more complex needs.
+
 Deploying Apache
 ^^^^^^^^^^^^^^^^
 
@@ -330,7 +336,6 @@ We start by creating our role structure :
 .. code:: shell
 
         $ mkdir -p roles/apache/{handlers,tasks}
-        $ touch roles/apache/{handlers,tasks}/main.yml
 
 Then, we create our 2 simple steps :
 
@@ -522,8 +527,8 @@ Last but not least, you may notice that a *mysql_root_password* variable is requ
 
 .. code:: shell
 
-        $ mkdir inventory/hosts_vars
-        $ vim inventory/hosts_vars/db1
+        $ mkdir inventory/host_vars
+        $ vim inventory/host_vars/db1
 
 .. code:: yaml
 
@@ -531,12 +536,22 @@ Last but not least, you may notice that a *mysql_root_password* variable is requ
 
         mysql_root_password: insecurerootpass
 
+.. note::
+
+        Obviously, we can use cleartext passwords in our academic context : in a production environment, you need to use a secrets/passwords management solution.
+
+        A starting point could be Ansible Vault (https://docs.ansible.com/ansible/latest/user_guide/vault.html).
+
 Backups
 ~~~~~~~
 
 The other task is about the deployment of *automysqlbackup*, a small script which will handle dumps and their rotation in a dedicated folder.
 
 If you look inside the *defaults* folder of the role, you will see some variables :
+
+.. code:: shell
+
+        $ cat roles/mysql-server/defaults/main.yml
 
 .. code:: yaml
 
@@ -594,7 +609,7 @@ That looks good. Let's create the according playbook :
           become: yes
 
           roles:
-            - mysql
+            - mysql-server
 
 You can run your playbook to check everything works :
 
@@ -808,11 +823,37 @@ Now our 2 subtasks are ready, we need to glue them together :
 
 As you can see, this role will call the *db.yml* and *web.yml* subtasks on the right groups.
 
-Do you remember the *wp-config.php* template we will deploy ? Well, if you look at it you will see that it requires a *wordpress_database* variable we didn't create anywhere ; the same way, if you carefully look the *roles/db.yml* subtask, you will see that a *wordpress_webserver* variable is also required.
+We also need to create a new group in our inventory to indicate which machines will be part of this Wordpress infrastructure : we will create a *wordpress* group which will handle our previously created *database_server* and *web_server* groups.
+
+.. code:: shell
+
+        $ vim inventory/hosts
+
+.. code:: ini
+
+        [database_server]
+        db1 ansible_host=XX.XX.XX.XX
+
+        [web_server]
+        web1 ansible_host=XX.XX.XX.XX
+
+        [wordpress:children]
+        database_server
+        web_server
+
+        [all:vars]
+        ansible_user=ubuntu
+
+Now, do you remember the *wp-config.php* template we will deploy ? Well, if you look at it you will see that it requires a *wordpress_database* variable we didn't create anywhere ; the same way, if you carefully look the *roles/db.yml* subtask, you will see that a *wordpress_webserver* variable is also required.
 
 These variables are the ones we will use to create a database only available for our webserver, and that we will provide to our Wordpress to tell it which database to use.
 
 In this context, it could make sense to define them as *group_vars*, as they should not be the defaults variables for this role (to make it generic).
+
+.. code:: shell
+
+        $ mkdir inventory/group_vars/wordpress
+        $ vim inventory/group_vars/wordpress/database.yml
 
 .. admonition:: Task 8 : Still more variables
 
@@ -830,6 +871,8 @@ First, we will create a simple *wordpress* playbook :
         $ vim playbooks/wordpress.yml
 
 .. code:: yaml
+
+        ---
 
         - hosts:
             - wordpress
