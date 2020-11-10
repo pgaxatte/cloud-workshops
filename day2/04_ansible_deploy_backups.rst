@@ -24,7 +24,7 @@ First, we need to add our new server to our inventory :
 
         backup ansible_host=<your IP>
 
-.. admonition:: Secure your *backup* machine and update your */etc/hosts*
+.. admonition:: Task 1 : Secure your *backup* machine and update your */etc/hosts*
 
         Before doing anything else, you have to run your *base.yml* playbook against your machines, to ensure that :
 
@@ -160,7 +160,7 @@ And run it (in this example, we limit the playbook execution to our *backup* mac
         PLAY RECAP *******************************************************************************************
         backup                     : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
-.. admonition:: Additional check
+.. admonition:: Task 2 : Additional check
 
         Ok, we copy a binary file to our machines to deploy Borg, but what if this file is damaged ?
 
@@ -332,7 +332,7 @@ Run time !
         db1                        : ok=19   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
         web1                       : ok=19   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
-.. admonition:: Additional backup server
+.. admonition:: Task 3 : Additional backup server
 
         To explore the full power of this small role, make *db1* also backup itself onto *web1*.
 

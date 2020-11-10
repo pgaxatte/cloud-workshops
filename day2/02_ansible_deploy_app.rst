@@ -174,7 +174,7 @@ In this small extract, you can see that this step is looking for a *admins* vari
           - username: toto
             ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6z7BUPAKbv2R9NvrfmQN8m/8VVvXXl8sc0L73PYYXi toto@toto-computer"
 
-.. admonition:: Admin username and SSH key configuration
+.. admonition:: Task 1 : Admin username and SSH key configuration
 
         The *admins* variable is empty : based on the *old_admins* exemple, complete the missing part to create a **student** admin user with **your SSH key**.
 
@@ -498,7 +498,7 @@ In the *server.yml* part, we need to install the required packages.
 
         $ vim roles/mysql-server/tasks/server.yml
 
-.. admonition:: Install MySQL required packages
+.. admonition:: Task 2 : Install MySQL required packages
 
         Based on the *apache* example, complete the first step to deploy the following packages :
 
@@ -514,7 +514,7 @@ You will notice in the third step that we have a *notify* statement, because we 
 
         $ vim roles/mysql-server/handlers/main.yml
 
-.. admonition:: Implement MySQL handler
+.. admonition:: Task 3 : Implement MySQL handler
 
         Based on the *apache* example, again, complete the *handlers/main.yml* file to manage the restart of the *mariadb* process when required.
 
@@ -552,7 +552,7 @@ These variables will be used in the *automysqlserver* configuration template.
 
         $ vim roles/mysql-server/templates/automysqlbackup.conf.j2
 
-.. admonition:: Integrate *automysqlserver* variables
+.. admonition:: Task 4 : Integrate *automysqlserver* variables
 
         Based on the *templates/my.cnf.j2* example, complete the following variables calls of the *templates/automysqlbackup.conf.j2* template :
 
@@ -752,7 +752,7 @@ The *tasks/db.yml* is already provided, but again we need some variables.
 
         $ vim roles/wordpress/defaults/main.yml
 
-.. admonition:: Provide default Wordpress database variables
+.. admonition:: Task 5 : Provide default Wordpress database variables
 
         We want the following variables to be defined :
 
@@ -769,7 +769,7 @@ If we look at *tasks/web.yml*, we can see that some parts are missing.
 
         $ vim roles/wordpress/tasks/web.yml
 
-.. admonition:: Copy the Wordpress configuration template
+.. admonition:: Task 6 : Copy the Wordpress configuration template
 
         A *templates/wp-config.php.j2* file is provided. You need to copy it to your server, according to the following parameters :
 
@@ -779,7 +779,7 @@ If we look at *tasks/web.yml*, we can see that some parts are missing.
 
         We already used a module to do it earlier. You should have a look into your roles.
 
-.. admonition:: Activate the *rewrite* module
+.. admonition:: Task 7 : Activate the *rewrite* module
 
         Your Wordpress need the Apache *rewrite* module to be activated. You need to look at the Ansible documatation available at https://docs.ansible.com/ to find the right module and syntax.
 
@@ -814,7 +814,7 @@ These variables are the ones we will use to create a database only available for
 
 In this context, it could make sense to define them as *group_vars*, as they should not be the defaults variables for this role (to make it generic).
 
-.. admonition:: Still more variables
+.. admonition:: Task 8 : Still more variables
 
         You need to provide the following variables as *group_vars* variables :
 
