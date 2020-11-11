@@ -49,3 +49,21 @@ html_theme = 'pyramid'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Allows replacing strings in code blocks
+# see https://github.com/sphinx-doc/sphinx/issues/4054#issuecomment-329097229
+import os
+def ultimateReplace(app, docname, source):
+    result = source[0]
+    for key in app.config.ultimate_replacements:
+        result = result.replace(key, app.config.ultimate_replacements[key])
+    source[0] = result
+
+ultimate_replacements = {
+    "{WORKSHOP_SERVER}" : os.environ.get("WORKSHOP_SERVER", "<workshop server>"),
+    "{WORKSHOP_CHECK_SERVER}" : os.environ.get("WORKSHOP_SERVER", "localhost"),
+}
+
+def setup(app):
+   app.add_config_value('ultimate_replacements', {}, True)
+   app.connect('source-read', ultimateReplace)

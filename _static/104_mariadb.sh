@@ -59,7 +59,7 @@ FLUSH PRIVILEGES"
 
 echo "Importing initial database"
 {
-    curl -sL https://{{WORKSHOP_SERVER}}/01d_wp_dump.sql.gz \
+    curl -sL https://{WORKSHOP_SERVER}/_static/104_wp_dump.sql.gz \
         | gzip -d \
         | sed "s/{{SERVER_IP_ADDR}}/${WORDPRESS_PUBLIC_IP}/g" \
         | mysql --defaults-file=/etc/mysql/root.cnf wordpress

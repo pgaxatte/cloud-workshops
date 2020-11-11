@@ -300,9 +300,9 @@ Now, you should have enough information to complete the following tasks:
     .. code:: shell
 
         # From the first VM
-        debian@vm01:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/01.sh | sh
+        debian@vm01:~$ curl -sL https://{WORKSHOP_SERVER}/check/101 | sh
 
         # And from the second one
-        debian@vm02:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/01.sh | sh
+        debian@vm02:~$ curl -sL https://{WORKSHOP_SERVER}/check/101 | sh
 
 Once this is done, proceed to the :doc:`next course <02_manage_volumes>`.

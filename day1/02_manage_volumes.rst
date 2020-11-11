@@ -14,11 +14,11 @@ You need to have completed the :doc:`first course <01_manage_instances>` and hav
 Create a volume
 ---------------
 
-The creation of a volume is very simple, just issue the following command to create a 10GB volume:
+The creation of a volume is very simple, just issue the following command to create a 1GB volume:
 
 .. code:: shell
 
-    openstack volume create --size 10 volume01
+    openstack volume create --size 1 volume01
 
 This will output some information about the newly created volume:
 ::
@@ -38,7 +38,7 @@ This will output some information about the newly created volume:
     | name                | volume01                             |
     | properties          |                                      |
     | replication_status  | disabled                             |
-    | size                | 10                                   |
+    | size                | 1                                    |
     | snapshot_id         | None                                 |
     | source_volid        | None                                 |
     | status              | creating                             |
@@ -234,9 +234,9 @@ Now you should be able to do the following tasks on your own:
     .. code:: shell
 
         # From the first VM
-        debian@vm01:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/02.sh | sh
+        debian@vm01:~$ curl -sL https://{WORKSHOP_SERVER}/check/102 | sh
 
         # And from the second one
-        debian@vm02:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/02.sh | sh
+        debian@vm02:~$ curl -sL https://{WORKSHOP_SERVER}/check/102 | sh
 
 Once you are ready, move on to the :doc:`next course <03_manage_networks_and_ports>`.

@@ -388,9 +388,9 @@ To finish this workshop, complete the following:
     .. code:: shell
 
         # From the first VM
-        debian@vm01:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/03.sh | sh
+        debian@vm01:~$ curl -sL https://{WORKSHOP_SERVER}/check/103 | sh
 
         # And from the second one
-        debian@vm02:~$ curl -sL https://{{WORKSHOP_SERVER}}/day1/03.sh | sh
+        debian@vm02:~$ curl -sL https://{WORKSHOP_SERVER}/check/103 | sh
 
 Once you are ready, move on to the :doc:`next course <04_deploy_app_manual>`.

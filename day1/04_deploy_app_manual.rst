@@ -41,7 +41,7 @@ Connect to the ``vm02`` instance and run the following command:
     ssh debian@XXX.XXX.XXX.XXX
 
     # Run the prepared installation script
-    debian@vm02:~$ curl https://{{WORKSHOP_SERVER}}/files/04/mariadb.sh | sudo bash
+    debian@vm02:~$ curl https://{WORKSHOP_SERVER}/_static/104_mariadb.sh | sudo bash
 
 Install WordPress on ``vm01``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -54,7 +54,7 @@ Connect to the ``vm01`` instance and run the following command:
     ssh debian@XXX.XXX.XXX.XXX
 
     # Run the prepared installation script
-    debian@vm01:~$ curl https://{{WORKSHOP_SERVER}}/files/04/wordpress.sh | sudo bash
+    debian@vm01:~$ curl https://{WORKSHOP_SERVER}/_static/104_wordpress.sh | sudo bash
 
 Now you can browse to the given URL to see the result of the installation.
 
