@@ -10,7 +10,7 @@ data="$(cat <<EOF
 EOF
 )"
 
-if ! out="$(curl -s -H "Content-Type: application/json" -d "${data}" https://{WORKSHOP_CHECK_SERVER}/101 2>&1 | jq -r '.results[]')"
+if ! out="$(curl -s -H "Content-Type: application/json" -d "${data}" https://{WORKSHOP_CHECK_SERVER}/101 2>&1)"
 then
     echo "Cannot upload the results of the check: ${out}"
     exit 1
