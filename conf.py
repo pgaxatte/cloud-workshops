@@ -62,7 +62,7 @@ def ultimateReplace(app, docname, source):
 
 ultimate_replacements = {
     "{WORKSHOP_SERVER}" : os.environ.get("WORKSHOP_SERVER", "<workshop server>"),
-    "{WORKSHOP_CHECK_SERVER}" : os.environ.get("WORKSHOP_SERVER", "localhost"),
+    "{WORKSHOP_CHECK_SERVER}" : os.environ.get("WORKSHOP_CHECK_SERVER", "localhost"),
 }
 
 def setup(app):
