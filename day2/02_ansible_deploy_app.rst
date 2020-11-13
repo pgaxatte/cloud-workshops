@@ -957,9 +957,7 @@ Ok, that sounds good. Let's try !
 
         TASK [wordpress : Copy Wordpress apache conf files] **************************************************
         skipping: [db1] => (item={u'dest': u'/etc/apache2/sites-available/wordpress.conf', u'src': u'wordpress.conf', u'mode': u'644'})
-        skipping: [db1] => (item={u'dest': u'/etc/apache2/.htaccess_wordpress', u'src': u'htaccess', u'mode': u'600'})
         ok: [web1] => (item={u'dest': u'/etc/apache2/sites-available/wordpress.conf', u'src': u'wordpress.conf', u'mode': u'644'})
-        ok: [web1] => (item={u'dest': u'/etc/apache2/.htaccess_wordpress', u'src': u'htaccess', u'mode': u'600'})
 
         TASK [wordpress : Deactivate default apache conf file] ***********************************************
         skipping: [db1]
@@ -978,10 +976,6 @@ Ok, that sounds good. Let's try !
         web1                       : ok=11   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 
 You can now visit your Wordpress ! Go to http://<your public webserver IP>.
-
-.. note::
-
-        As a little security (your Wordpress is not fully configured, and we didn't deploy any SSL configuration), you will be asked for some htaccess credentials : they are available into your *.openrc* file.
 
 You should have the following screen :
 
