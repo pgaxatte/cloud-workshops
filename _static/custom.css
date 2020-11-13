@@ -1,0 +1,12 @@
+[class*=admonition-task] {
+    background: #c7f5e1 !important;
+    border: 6px solid #19734d !important;
+    border-right: 6px solid #19734d !important;
+    border-left: 6px solid #19734d !important;
+}
+.admonition-evaluation {
+    background: #d3c7f5 !important;
+    border: 6px solid #281973 !important;
+    border-right: 6px solid #281973 !important;
+    border-left: 6px solid #281973 !important;
+}
