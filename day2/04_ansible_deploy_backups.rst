@@ -198,7 +198,7 @@ Again, here is the skeleton of our role :
 
 .. code:: shell
 
-        $ curl -sLo /tmp/borg.tar.gz https://{WORKSHOP_SERVER}/_static/204_borg.tar.gz
+        $ curl -o /tmp/borg.tar.gz https://{WORKSHOP_SERVER}/_static/204_borg.tar.gz
         $ tar -xzf /tmp/borg.tar.gz -C /projects/ansible/roles/
         $ cd /projects/ansible/roles
 

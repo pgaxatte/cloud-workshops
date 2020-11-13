@@ -14,7 +14,7 @@ You won't start from scratch, let's import a basic structure :
 
 .. code:: shell
 
-        $ curl -sLo /tmp/ansible.tar.gz https://{WORKSHOP_SERVER}/_static/202_ansible.tar.gz
+        $ curl -o /tmp/ansible.tar.gz https://{WORKSHOP_SERVER}/_static/202_ansible.tar.gz
         $ tar -xzf /tmp/ansible.tar.gz -C /projects/
         $ cd /projects/ansible
 
@@ -153,7 +153,7 @@ In this small extract, you can see that this step is looking for a *admins* vari
 
 .. code:: shell
 
-        $ vim inventory/group_vars/all/admins
+        $ vim inventory/group_vars/all/admins.yml
 
 .. code:: yaml
 
@@ -479,9 +479,9 @@ This role will be more complicated ; let's incorporate it directly in our reposi
 
 .. code:: shell
 
-        $ curl -sLo /tmp/mysqld.tar.gz https://{WORKSHOP_SERVER}/_static/202_mysqld.tar.gz
+        $ curl -o /tmp/mysqld.tar.gz https://{WORKSHOP_SERVER}/_static/202_mysqld.tar.gz
         $ tar -xzf /tmp/mysqld.tar.gz -C /projects/ansible/roles/
-        $ cd /projects/ansible/roles
+        $ cd /projects/ansible
 
 
 In this role, we have 2 tasks :
@@ -504,11 +504,11 @@ In the *server.yml* part, we need to install the required packages.
 
         Based on the *apache* example, complete the first step to deploy the following packages :
 
-        - 'python-mysqldb'
-        - 'python-pymysql'
-        - 'python3-mysqldb'
-        - 'python3-pymysql'
-        - 'mariadb-server'
+        - python-mysqldb
+        - python-pymysql
+        - python3-mysqldb
+        - python3-pymysql
+        - mariadb-server
 
 You will notice in the third step that we have a *notify* statement, because we could have some MySQL configuration changes.
 
@@ -747,9 +747,9 @@ The same way we imported a pre-made *mysql-server* role, we will copy a *wordpre
 
 .. code:: shell
 
-        $ curl -sLo /tmp/wordpress.tar.gz https://{WORKSHOP_SERVER}/_static/202_wordpress.tar.gz
+        $ curl -o /tmp/wordpress.tar.gz https://{WORKSHOP_SERVER}/_static/202_wordpress.tar.gz
         $ tar -xzf /tmp/wordpress.tar.gz -C /projects/ansible/roles/
-        $ cd /projects/ansible/roles
+        $ cd /projects/ansible
 
 Deploying a Wordpress is a 2-steps operation : a database, and the CMS itself. Again, to make things clear, we will split it in 2 subtasks.
 
