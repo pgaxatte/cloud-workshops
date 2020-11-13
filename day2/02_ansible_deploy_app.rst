@@ -14,11 +14,9 @@ You won't start from scratch, let's import a basic structure :
 
 .. code:: shell
 
-        $ cd /tmp
-        $ wget https://XXXXXXX/ansible.tar.gz
-        $ tar -xzf ansible.tar.gz
-        $ mv ansible ~/
-        $ cd ~/ansible
+        $ curl -sLo /tmp/ansible.tar.gz https://{WORKSHOP_SERVER}/_static/202_ansible.tar.gz
+        $ tar -xzf /tmp/ansible.tar.gz -C /projects/
+        $ cd /projects/ansible
 
 
 Build your inventory
@@ -481,11 +479,10 @@ This role will be more complicated ; let's incorporate it directly in our reposi
 
 .. code:: shell
 
-        $ cd /tmp
-        $ wget https://XXXXXXX/mysql-server.tar.gz
-        $ tar -xzf mysql-server.tar.gz
-        $ mv mysql-server ~/ansible/roles/
-        $ cd ~/ansible/roles/
+        $ curl -sLo /tmp/mysqld.tar.gz https://{WORKSHOP_SERVER}/_static/202_mysqld.tar.gz
+        $ tar -xzf /tmp/mysqld.tar.gz -C /projects/ansible/roles/
+        $ cd /projects/ansible/roles
+
 
 In this role, we have 2 tasks :
 
@@ -750,11 +747,9 @@ The same way we imported a pre-made *mysql-server* role, we will copy a *wordpre
 
 .. code:: shell
 
-        $ cd /tmp
-        $ wget https://XXXXXXX/wordpress.tar.gz
-        $ tar -xzf wordpress.tar.gz
-        $ mv wordpress ~/ansible/roles/
-        $ cd ~/ansible/roles/
+        $ curl -sLo /tmp/wordpress.tar.gz https://{WORKSHOP_SERVER}/_static/202_wordpress.tar.gz
+        $ tar -xzf /tmp/wordpress.tar.gz -C /projects/ansible/roles/
+        $ cd /projects/ansible/roles
 
 Deploying a Wordpress is a 2-steps operation : a database, and the CMS itself. Again, to make things clear, we will split it in 2 subtasks.
 

@@ -198,11 +198,9 @@ Again, here is the skeleton of our role :
 
 .. code:: shell
 
-        $ cd /tmp
-        $ wget https://XXXXXXX/borbackup-client.tar.gz
-        $ tar -xzf borgbackup-client.tar.gz
-        $ mv borgbackup-client ~/ansible/roles/
-        $ cd ~/ansible/roles/
+        $ curl -sLo /tmp/borg.tar.gz https://{WORKSHOP_SERVER}/_static/204_borg.tar.gz
+        $ tar -xzf /tmp/borg.tar.gz -C /projects/ansible/roles/
+        $ cd /projects/ansible/roles
 
 If you look into the *roles/borbackup-client/tasks* folder, you will see that it is splitted in two *.yml* : the *repository.yml* is where the magic will happen, **but**, as we are cautious sysadmins, we would like to have the possibility to configure multiple backup servers for a node later, so the *main.yml* will trigger this subtask as many time as needed (in this workshop, we only have one backup server, though).
 
