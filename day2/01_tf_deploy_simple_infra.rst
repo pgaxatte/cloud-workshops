@@ -25,8 +25,8 @@ Then, you need to create a directory to put your terraform configuration inside:
 
 .. code:: shell
 
-    $ mkdir tf-workshop
-    $ cd tf-workshop
+    $ mkdir /projects/tf-workshop
+    $ cd /projects/tf-workshop
 
 Create a keypair and an instance
 --------------------------------

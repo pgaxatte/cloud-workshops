@@ -104,6 +104,18 @@ You should have a result like this :
             "ping": "pong"
         }
 
+.. warning::
+
+    If you get this kind of errors when ansible tries to connect to your instances:
+
+    .. code::
+
+        [WARNING]: Unhandled error in Python interpreter discovery for host XXX: Failed to connect to the host via ssh: Host key verification failed.
+
+    This means you did not connect to the machine yet and your machine does not know this fingerprint.
+    So you need to connect once to each machine and accept the key.
+
+
 Enforce your basic configuration
 --------------------------------
 
