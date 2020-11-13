@@ -196,3 +196,5 @@ Replace the old inventory with the new one, generated from terraform:
 
     Then you can apply the ``deploy-wordpress.yml`` playbook again and it should
     work flawlessly.
+
+You can go to the :doc:`next course <04_ansible_deploy_backups>`.

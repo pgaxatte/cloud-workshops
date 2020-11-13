@@ -27,7 +27,6 @@ infrastructure based on VMware vSphere.
    03_manage_networks_and_ports
    04_deploy_app_manual
    05_security
-   06_deploy_app_userdata
 
 
 The goal of this first workshop on Public Cloud is to guide you towards a

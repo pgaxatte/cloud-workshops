@@ -12,6 +12,7 @@ The workshops for day 2 are organized as follows :
    02_ansible_deploy_app
    03_tf_add_backup_infra
    04_ansible_deploy_backups
+   05_tf_security
 
 
 The goal of this second workshop is to help you use Ansible and Terraform with

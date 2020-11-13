@@ -35,7 +35,11 @@ In the previous part, you should have generated your Ansible inventory dynamical
         web_server
 
         [all:vars]
-        ansible_user=student
+        ansible_user=ubuntu
+
+        [wordpress:vars]
+        wordpress_database = XX.XX.XX.XX
+        wordpress_webserver = XX.XX.XX.XX
 
 .. admonition:: Task 1 : Secure your *backup* machine and update your */etc/hosts*
 
@@ -117,7 +121,7 @@ Ok, now we can create a new role :
 .. code:: yaml
 
         ---
-        
+
         borg_version: 1.1.9
 
 Two things to notice here :
@@ -383,3 +387,5 @@ As you can see, our backups are present !
 .. note::
 
         Congratulations, you're done with this workshop :)
+
+If you still have some time left, head to the :doc:`bonus <05_tf_security>`.
