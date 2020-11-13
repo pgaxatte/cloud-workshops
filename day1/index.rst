@@ -13,6 +13,9 @@ The workshops for day 1 are organized as follows :
    01_connecting_to_pcc
    02_creating_template
 
+This workshop on Private Cloud will help understand how to manipulate the
+infrastructure based on VMware vSphere.
+
 **Public Cloud**
 
 .. toctree::
@@ -27,7 +30,8 @@ The workshops for day 1 are organized as follows :
    06_deploy_app_userdata
 
 
-The goal of this first workshop on Public Cloud is to guide towards a simple deployment of two
-instances using the command-line. These two instances will be connected to the
-internet and between them via a private network. You will also learn how to use
-volumes and manage the security by restricting the access to your instances.
+The goal of this first workshop on Public Cloud is to guide you towards a
+simple deployment of two instances using the command-line. These two instances
+will be connected to the internet and between them via a private network. You
+will also learn how to use volumes and manage the security by restricting the
+access to your instances.
