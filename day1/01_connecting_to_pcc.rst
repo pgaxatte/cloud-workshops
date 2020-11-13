@@ -18,7 +18,7 @@ https://docs.ovh.com/fr/private-cloud/connexion-interface-vsphere/
         - You may have a slightly different interface depending of the version of your PCC.
 
 Checking VMware High-Availability
-------------------------
+---------------------------------
 
 Your PCC may show you some warnings regarding High-Availability.
 
