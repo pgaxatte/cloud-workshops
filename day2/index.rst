@@ -1,4 +1,4 @@
-Day 2 : Bascis of Ansible and Terraform
+Day 2 : Basics of Ansible and Terraform
 =======================================
 
 

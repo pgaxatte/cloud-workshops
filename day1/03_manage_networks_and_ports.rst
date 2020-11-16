@@ -182,7 +182,7 @@ Let's verify that the instances can see each other on the private network:
     [...]
     debian@vmpriv-1:~$
 
-    # Once connectes to the instance let's install nmap to check the surrounding network
+    # Once connected to the instance let's install nmap to check the surrounding network
     debian@vmpriv-1:~$ sudo apt-get update -y && sudo apt-get install -y nmap
     [...]
 

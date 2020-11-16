@@ -300,8 +300,9 @@ You must then use it in the instances for the ``name`` attribute of the
     }
 
 .. note::
+
     Notice the reference starts with ``data.``. This prefix would not be present
-   if you had referenced another ``resource``.
+    if you had referenced another ``resource``.
 
 .. admonition:: Task 4
 
