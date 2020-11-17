@@ -160,7 +160,7 @@ So let's add all this to the ``outputs.tf`` file:
     # [...]
 
     [all:vars]
-    ansible_user=student
+    ansible_user=ubuntu
 
     [wordpress:vars]
     wordpress_database = # ... complete with the right local variable
