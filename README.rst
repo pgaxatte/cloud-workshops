@@ -1,7 +1,12 @@
 Build the docs
 ==============
 
-You need ``make`` in either scenarios.
+You need ``make`` in either scenarios, so first:
+
+.. code:: shell
+
+    # On Debian based systems:
+    sudo apt-get install make
 
 Build locally using pip
 -----------------------
