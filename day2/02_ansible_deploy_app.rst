@@ -314,7 +314,7 @@ As you can see, as some modification has been applied to the SSH configuration, 
 Deploying our project
 ---------------------
 
-Our goal for this project is to deploy a fresh Wordpress plateform. To achieve that, we need to identify our needs :
+Our goal for this project is to deploy a fresh Wordpress platform. To achieve that, we need to identify our needs :
 
 - a web server (we will use Apache)
 - a database (we will use MySQL/MariaDB)

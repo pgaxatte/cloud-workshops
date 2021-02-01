@@ -1,7 +1,7 @@
 Connecting to a PCC
 ===================
 
-The goal of this first part is to connect to your Private Cloud plateform and discover the very basics.
+The goal of this first part is to connect to your Private Cloud platform and discover the very basics.
 
 We will use some OVHCloud documentation.
 

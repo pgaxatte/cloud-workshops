@@ -106,7 +106,7 @@ created:
     NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
     sda      8:0    0  20G  0 disk
     └─sda1   8:1    0  20G  0 part /
-    sdb      8:16   0  10G  0 disk
+    sdb      8:16   0   1G  0 disk
 
 The new disk (``/dev/sdb`` here) is blank and does not have a partition nor a filesystem on it. So
 let's create one:
@@ -122,8 +122,8 @@ Another run of ``lsblk`` should confirm there is now a partition on the volume:
     NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
     sda      8:0    0  20G  0 disk
     └─sda1   8:1    0  20G  0 part /
-    sdb      8:16   0  10G  0 disk
-    └─sdb1   8:17   0  10G  0 part
+    sdb      8:16   0   1G  0 disk
+    └─sdb1   8:17   0   1G  0 part
 
 Now we need to format it:
 
@@ -137,7 +137,7 @@ Finally we can mount it and use it:
 
     debian@vm01:~$ sudo mount /dev/sdb1 /mnt
 
-And check the 10GB are there with ``df -h`` for instance:
+And check the 1GB are there with ``df -h`` for instance:
 
 ::
 
@@ -200,8 +200,8 @@ And check everything is there:
     NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
     sda      8:0    0  20G  0 disk
     └─sda1   8:1    0  20G  0 part /
-    sdb      8:16   0  10G  0 disk
-    └─sdb1   8:17   0  10G  0 part
+    sdb      8:16   0   1G  0 disk
+    └─sdb1   8:17   0   1G  0 part
     debian@vm02:~$ sudo mount /dev/sdb1 /mnt
     debian@vm02:~$ cat /mnt/content.txt
     This is volume01
