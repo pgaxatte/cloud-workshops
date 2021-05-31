@@ -10,21 +10,28 @@ using OpenStack).
     Before beginning the workshops, the following elements should have been communicated to you:
 
     * the address of the lab server
-    * the password of the lab user (named ``student``)
+    * your username and password for the lab
 
 
 Connect to the container
 ------------------------
 
-With this information you can connect to the lab server:
+With this information you can connect to the lab server at the address:
 
-.. code:: shell
+https://{WORKSHOP_IDE_SERVER}/
 
-    ssh student@XXX.XXX.XXX.XXX
-
-Follow the instructions by providing a username of your choice.
 
 **You are now logged into your personal container.**
+
+Open Terminal
+-------------
+
+A good portion of the work done during these workshops will be done through the terminal.
+To open it:
+
+* Click **Terminal**
+
+* Then **New Terminal**
 
 
 Load the credentials

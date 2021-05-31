@@ -27,7 +27,9 @@ author = 'Pierre Gaxatte'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = ['rst2pdf.pdfbuilder']
+
+pdf_documents = [('index', 'rst2pdf', 'Cloud Workshops', 'Pierre Gaxatte'),]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -62,6 +64,7 @@ def ultimateReplace(app, docname, source):
 
 ultimate_replacements = {
     "{WORKSHOP_SERVER}" : os.environ.get("WORKSHOP_SERVER", "<workshop server>"),
+    "{WORKSHOP_IDE_SERVER}" : os.environ.get("WORKSHOP_IDE_SERVER", "<workshop IDE server>"),
     "{WORKSHOP_CHECK_SERVER}" : os.environ.get("WORKSHOP_CHECK_SERVER", "localhost"),
 }
 
