@@ -8,7 +8,7 @@ WORKDIR /docs
 RUN apt-get update \
     && apt-get install --no-install-recommends -y make \
     && python3 -m pip install --no-cache-dir -U pip \
-    && python3 -m pip install --no-cache-dir Sphinx==3.3.0 \
+    && python3 -m pip install --no-cache-dir -r /docs/requirements.txt \
     && export WORKSHOP_SERVER="${WORKSHOP_SERVER}" \
               WORKSHOP_CHECK_SERVER="${WORKSHOP_CHECK_SERVER}" \
               ANSIBLE_DAY2_GIT_URL="${ANSIBLE_DAY2_GIT_URL}" \
@@ -19,6 +19,7 @@ RUN apt-get update \
     && make html BUILDDIR=/build
 
 FROM nginx:alpine
+EXPOSE 80
 COPY --from=builder /build/html /usr/share/nginx/html
 
 ADD docker/nginx-default.conf /etc/nginx/conf.d/default.conf

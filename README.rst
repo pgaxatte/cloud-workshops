@@ -27,7 +27,7 @@ Create a virtualenv and install Sphinx:
 
     source .venv/bin/activate
 
-    pip install Sphinx==3.3.0
+    pip install -r requirements.txt
 
 Now that's done, you can build the docs:
 
@@ -52,6 +52,6 @@ That's easy:
 .. code:: shell
 
     make docker
-    docker run -d workshop-docs
+    docker run -e 127.0.0.1:8080:80 workshop-docs
 
-You can now read the docs `here <http://localhost/>`__.
+You can now read the docs `here <http://localhost:8080/>`__.

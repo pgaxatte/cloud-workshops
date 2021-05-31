@@ -12,9 +12,12 @@ BUILDDIR      = _build
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-
 docker:
 	@docker build -t workshop-docs .
+
+serve: html
+	@cd _build/html; \
+		python3 -m http.server
 
 .PHONY: help docker Makefile
 
