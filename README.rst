@@ -52,6 +52,6 @@ That's easy:
 .. code:: shell
 
     make docker
-    docker run -e 127.0.0.1:8080:80 workshop-docs
+    docker run -p 127.0.0.1:8080:80 workshop-docs
 
 You can now read the docs `here <http://localhost:8080/>`__.
