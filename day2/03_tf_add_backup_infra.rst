@@ -128,7 +128,7 @@ Generate wordpress's group vars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you take a look at your
-``/projetcs/ansible/group_vars/wordpress/database.yml`` file, you should see
+``/projetcs/ansible/inventory/group_vars/wordpress/database.yml`` file, you should see
 something similar to:
 
 .. code:: yaml
@@ -187,7 +187,7 @@ Replace the old inventory with the new one, generated from terraform:
 .. code:: shell
 
     $ cd /projects/tf-workshop
-    $ terraform output inventory > /projects/ansible/inventory/hosts
+    $ terraform output -raw inventory > /projects/ansible/inventory/hosts
 
 .. admonition:: Task 5
 

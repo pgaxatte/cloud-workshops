@@ -97,6 +97,15 @@ code to your configuration in ``main.tf``:
         lifecycle {
             ignore_changes = [image_id]
         }
+        terraform {
+          required_providers {
+            openstack = {
+              source = "terraform-provider-openstack/openstack"
+              version = "1.42.0"
+            }
+          }
+
+        }
     }
 
 
