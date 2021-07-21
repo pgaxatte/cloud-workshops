@@ -76,7 +76,7 @@ Now you can download the roles locally, into the
 .. code:: shell
 
     $ cd /projects/rocket/ansible
-    $ ansible-galaxy -r requirements.yml -p roles/
+    $ ansible-galaxy install -r requirements.yml -p roles/
 
 You should now see the new roles which where downloaded from GitHub.
 
@@ -142,7 +142,7 @@ The workflow can be summarized by the following commands:
     # Magic infrastructure appears
     # [...]
 
-    $ terraform output inventory > ../ansible/inventory/hosts
+    $ terraform output --raw inventory > ../ansible/inventory/hosts
 
     $ cd ../ansible
     $ ansible-playbook -b playbook.yml

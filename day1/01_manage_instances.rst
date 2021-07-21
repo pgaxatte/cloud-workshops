@@ -58,12 +58,12 @@ This will output a long table with the names and IDs of the available images:
     +--------------------------------------+---------------------------------------------+--------+
     | ID                                   | Name                                        | Status |
     +--------------------------------------+---------------------------------------------+--------+
-    | de440dfc-e485-4657-b3c2-70437fed7eb7 | Archlinux                                   | active |
-    | 5b009590-34c0-4793-a93e-c6627df06097 | Centos 6                                    | active |
+    | 8e9cb7d0-0027-4e6d-b0f0-15d410b3564a | Archlinux                                   | active |
+    | 081b63ca-62c4-4a7d-b17b-12a013867d98 | Centos 7                                    | active |
     | [...]                                                                                       |
-    | d60f629d-7f22-4db8-9f4a-cf480a26856f | Debian 9                                    | active |
+    | 354f5381-a624-4d66-84c0-1989982f1512 | Debian 9                                    | active |
     | [...]                                                                                       |
-    | 1068806a-7ca1-4c8a-8d6b-5f078cfa700a | rescue-ovh                                  | active |
+    | ae9ab227-f645-4a1c-9074-621db0a2b725 | rescue-ovh                                  | active |
     +--------------------------------------+---------------------------------------------+--------+
 
 
@@ -76,7 +76,7 @@ You can see the details of the image with the following command:
     openstack image show 'Debian 9'
 
     # Or using its ID
-    openstack image show d60f629d-7f22-4db8-9f4a-cf480a26856f
+    openstack image show 354f5381-a624-4d66-84c0-1989982f1512
 
 Choose a flavor
 ^^^^^^^^^^^^^^^
@@ -95,11 +95,11 @@ The resulting output will be something similar to this:
     +--------------------------------------+-----------------+--------+------+-----------+-------+-----------+
     | ID                                   | Name            |    RAM | Disk | Ephemeral | VCPUs | Is Public |
     +--------------------------------------+-----------------+--------+------+-----------+-------+-----------+
-    | 036e9748-b11e-427e-83af-407b2deee51b | win-b2-15       |  15000 |  100 |         0 |     4 | True      |
-    | 0b790592-f47c-4a52-ba56-3923a3013607 | c2-60-flex      |  60000 |   50 |         0 |    16 | True      |
-    | 0f7e0bf9-8100-4fd4-b238-29b1915481c4 | win-r2-15       |  15000 |   50 |         0 |     2 | True      |
-    | 119f1b5b-7744-43a5-bd40-bc54e18f1609 | c2-30           |  30000 |  200 |         0 |     8 | True      |
-    | 1a5fddab-4ddc-4619-ad29-09932b6bcb9f | r2-60           |  60000 |  100 |         0 |     4 | True      |
+    | 2f77f829-cb5e-4548-bac8-8cc4c6c737c6 | win-b2-15       |  15000 |  100 |         0 |     4 | True      |
+    | 9e0428b6-b236-420b-bb8c-d413aaa1b759 | c2-60-flex      |  60000 |   50 |         0 |    16 | True      |
+    | 20dec3c9-dec5-4de2-ae49-2ed5fa28f227 | win-r2-15       |  15000 |   50 |         0 |     2 | True      | 
+    | f63a48cc-5eab-4dc8-9129-15ae808a2bed | c2-30           |  30000 |  200 |         0 |     8 | True      |
+    | 97d824f9-d8a4-42c4-85b1-275bdd86eafc | r2-60           |  60000 |  100 |         0 |     4 | True      |
     | [...]                                                                                                  |
 
 
