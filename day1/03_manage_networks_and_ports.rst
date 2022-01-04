@@ -361,8 +361,7 @@ You should be able to complete the following tasks on your own:
 
 .. admonition:: Task 4
 
-    Connect to ``vm02`` and use dhclient to get an IP address on the private network as done
-    previously on ``vm01``
+    Connect to ``vm02`` and check that you got an IP address on the private network as previously on ``vm01``
 
 .. admonition:: Task 5
 

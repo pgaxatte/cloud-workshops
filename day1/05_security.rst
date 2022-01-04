@@ -102,10 +102,8 @@ public IP address:
 
     # With vm02 public IP address
 
-    $ nc -v XXX.XXX.XXX.XXX 3306
+    $ nc -vz XXX.XXX.XXX.XXX 3306
     Connection to XXX.XXX.XXX.XXX port 3306 [tcp/*] succeeded!
-
-    # Use <CTRL-C> to interrupt the command
 
 So let's proceed in securing this by creating security groups and rules.
 

@@ -76,7 +76,7 @@ Now you can download the roles locally, into the
 .. code:: shell
 
     $ cd /projects/rocket/ansible
-    $ ansible-galaxy -r requirements.yml -p roles/
+    $ ansible-galaxy install -r requirements.yml -p roles/
 
 You should now see the new roles which where downloaded from GitHub.
 

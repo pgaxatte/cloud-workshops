@@ -128,7 +128,7 @@ Generate wordpress's group vars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you take a look at your
-``/projetcs/ansible/group_vars/wordpress/database.yml`` file, you should see
+``/projetcs/ansible/inventory/group_vars/wordpress/database.yml`` file, you should see
 something similar to:
 
 .. code:: yaml
