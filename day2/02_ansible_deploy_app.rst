@@ -38,14 +38,14 @@ A first basic attempt would be :
 
 .. code:: ini
 
-        db1 ansible_host=XX.XX.XX.XX ansible_user=ubuntu
+        db1  ansible_host=XX.XX.XX.XX ansible_user=ubuntu
         web1 ansible_host=XX.XX.XX.XX ansible_user=ubuntu
 
 As you can see, we define in the inventory the IP of each machine and the user to connect to. But, the more the machines, the more duplicated information. Let's factorize a little :
 
 .. code:: ini
 
-        db1 ansible_host=XX.XX.XX.XX
+        db1  ansible_host=XX.XX.XX.XX
         web1 ansible_host=XX.XX.XX.XX
 
         [all:vars]
@@ -674,12 +674,12 @@ You can run your playbook to check everything works :
         --- before: /etc/mysql/mariadb.conf.d/50-server.cnf (content)
         +++ after: /etc/mysql/mariadb.conf.d/50-server.cnf (content)
         @@ -26,7 +26,7 @@
-         
+
          # Instead of skip-networking the default is now to listen only on
          # localhost which is more compatible and is not less secure.
         -bind-address		= 127.0.0.1
         +bind-address = 0.0.0.0
-         
+
          #
          # * Fine Tuning
 

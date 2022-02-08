@@ -1,5 +1,5 @@
-Day 3 : Build a scaling chat service
-====================================
+Day 3: Build a scaling chat service
+===================================
 
 
 The workshops for day 3 are organized as follows:

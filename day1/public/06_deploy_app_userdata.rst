@@ -1,7 +1,13 @@
+.. danger::
+
+   This page is unmaintained and the instructions are probably broken
+
+
+
 [Bonus] Re-deploy the two-tier application using metadata
 =========================================================
 
-This workshop will guide through the deployment of WordPress + MariaDB using
+This workshop will guide you through the deployment of WordPress + MariaDB using
 userdata supplied on boot.
 
 `cloud-init <https://cloudinit.readthedocs.io>`__ is a daemon running on all

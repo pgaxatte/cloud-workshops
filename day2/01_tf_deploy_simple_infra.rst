@@ -40,7 +40,7 @@ put it the keypair definition:
 .. code:: terraform
 
     # Create keypair from your local SSH keypair
-    resource openstack_compute_keypair_v2 keypair {
+    resource "openstack_compute_keypair_v2" "keypair" {
         name       = "tf-sshkey"
         public_key = file("~/.ssh/id_rsa.pub")
     }
@@ -58,7 +58,7 @@ code to your configuration in ``main.tf``:
 .. code:: terraform
 
     # Create web1 instance
-    resource openstack_compute_instance_v2 web1 {
+    resource "openstack_compute_instance_v2" "web1" {
         name        = "web1"
         image_name  = "Ubuntu 18.04"
         flavor_name = "s1-4"
@@ -75,21 +75,20 @@ code to your configuration in ``main.tf``:
             name           = "Ext-Net"
         }
 
-
         # This parameter configures cloud-init to make all interfaces use DHCP as
         # soon as they come up. This circumvent a bug in Ubuntu 18.04.
         user_data = <<EOF
-        #cloud-config
-        write_files:
-        - content: |
-            [Match]
-            Name=ens*
-            [Network]
-            DHCP=ipv4
-          path: /etc/systemd/network/ens.network
-        runcmd:
-        - systemctl restart systemd-networkd
-        EOF
+    #cloud-config
+    write_files:
+    - content: |
+        [Match]
+        Name=ens*
+        [Network]
+        DHCP=ipv4
+      path: /etc/systemd/network/ens.network
+    runcmd:
+    - systemctl restart systemd-networkd
+    EOF
 
         # In case the ID of the image changes (because a new version has been
         # pushed in production with the same name), this will prevent the instance
@@ -232,13 +231,13 @@ Create a new file named ``variables.tf`` and add the following lines to it:
 
 .. code:: terraform
 
-    variable image_name {
+    variable "image_name" {
       description = "Name of the image to use for the instances"
       type        = string
       default     = "Ubuntu 18.04"
     }
 
-    variable flavor_name {
+    variable "flavor_name" {
       description = "Name of the flavor to use for the instances"
       type        = string
       default     = "s1-4"
@@ -248,7 +247,7 @@ Modify your ``web1`` configuration in ``main.tf`` to use the variables:
 
 .. code:: terraform
 
-    resource openstack_compute_instance_v2 web1 {
+    resource "openstack_compute_instance_v2" "web1" {
         name        = "web1"
         image_name  = var.image_name
         flavor_name = var.flavor_name
@@ -276,7 +275,7 @@ Add the following block to ``main.tf``:
 
 .. code:: terraform
 
-    data openstack_networking_network_v2 pubnet {
+    data "openstack_networking_network_v2" "pubnet" {
         name      = "Ext-Net"
         tenant_id = ""
     }
@@ -290,7 +289,7 @@ You must then use it in the instances for the ``name`` attribute of the
 
 .. code:: terraform
 
-    resource openstack_compute_instance_v2 web1 {
+    resource "openstack_compute_instance_v2" "web1" {
         # ...
         network {
             access_network = true
@@ -319,12 +318,12 @@ But first you need to create it. Add these resources to ``main.tf``:
 
 .. code:: terraform
 
-    resource openstack_networking_network_v2 privnet {
+    resource "openstack_networking_network_v2" "privnet" {
         name           = "private-net"
         admin_state_up = "true"
     }
 
-    resource openstack_networking_subnet_v2 privsubnet {
+    resource "openstack_networking_subnet_v2" "privsubnet" {
         name            = "private-subnet"
         network_id      = openstack_networking_network_v2.privnet.id
         cidr            = "10.1.0.0/24"
@@ -403,7 +402,7 @@ Let's start with the private one for ``web1``. Add the following resource in ``m
 
 .. code:: terraform
 
-    resource openstack_networking_port_v2 priv_web1 {
+    resource "openstack_networking_port_v2" "priv_web1" {
         name           = "private-web1"
         network_id     = openstack_networking_network_v2.privnet.id
         admin_state_up = "true"
@@ -418,7 +417,7 @@ Modify the ``web1`` instance resource to use the port:
 
 .. code:: terraform
 
-    resource openstack_compute_instance_v2 web1 {
+    resource "openstack_compute_instance_v2" "web1" {
         # ...
         network {
             access_network = true

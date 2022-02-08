@@ -38,8 +38,8 @@ In the previous part, you should have generated your Ansible inventory dynamical
         ansible_user=ubuntu
 
         [wordpress:vars]
-        wordpress_database = XX.XX.XX.XX
-        wordpress_webserver = XX.XX.XX.XX
+        wordpress_database=XX.XX.XX.XX
+        wordpress_webserver=XX.XX.XX.XX
 
 .. admonition:: Task 1 : Secure your *backup* machine and update your */etc/hosts*
 

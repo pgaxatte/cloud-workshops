@@ -17,13 +17,13 @@ Let's add the security group and rule for that:
 .. code:: terraform
 
     # Create security group to allow SSH from everywhere
-    resource openstack_networking_secgroup_v2 allow_ssh {
+    resource "openstack_networking_secgroup_v2" "allow_ssh" {
       name        = "allow-ssh-from-all"
       description = "Allow SSH from everywhere"
     }
 
     # Create security rule to allow SSH from all sources
-    resource openstack_networking_secgroup_rule_v2 allow_ssh {
+    resource "openstack_networking_secgroup_rule_v2" "allow_ssh" {
       direction         = "ingress"
       ethertype         = "IPv4"
       protocol          = "tcp"
@@ -42,7 +42,7 @@ For example:
 
 .. code:: terraform
 
-    resource openstack_networking_port_v2 pub_XXX {
+    resource "openstack_networking_port_v2" "pub_XXX" {
       # [...]
 
       security_group_ids = [

@@ -47,7 +47,7 @@ Here is the volume resource definition to add to your ``main.tf``:
 
 .. code:: terraform
 
-    resource openstack_blockstorage_volume_v2 backup1 {
+    resource "openstack_blockstorage_volume_v2" "backup1" {
         name = "backup1"
         size = 10
     }
@@ -57,7 +57,7 @@ resource and on the backup instance resource:
 
 .. code:: terraform
 
-    resource openstack_compute_volume_attach_v2 backup1_vol {
+    resource "openstack_compute_volume_attach_v2" "backup1_vol" {
         instance_id = # reference to the backup instance's resource, using the *id* attribute
         volume_id   = # reference to the volume's resource, using the *id* attribute
     }
@@ -95,7 +95,7 @@ To do so, create a new file named ``outputs.tf``:
         backup_pub_ip = openstack_compute_instance_v2.backup1.access_ip_v4
     }
 
-    output inventory {
+    output "inventory" {
         description = "Ansible inventory generated from the plan"
         value = <<EOF
     # No group for the backup server
@@ -154,7 +154,7 @@ So let's add all this to the ``outputs.tf`` file:
         web1_priv_ip = openstack_networking_port_v2.priv_web1.all_fixed_ips[0]
     }
 
-    output inventory {
+    output "inventory" {
         description = "Ansible inventory generated from the plan"
         value = <<EOF
     # [...]
@@ -163,14 +163,15 @@ So let's add all this to the ``outputs.tf`` file:
     ansible_user=ubuntu
 
     [wordpress:vars]
-    wordpress_database = # ... complete with the right local variable
-    wordpress_webserver = # ... complete with the right local variable
+    wordpress_database=  # ... complete with the right local variables
+    wordpress_webserver= # ...
+    EOF
+    }
 
 .. note::
 
     Even if you leave the ``group_vars/wordpress/database.yml`` file as is,
-    ansible's `variable precedence
-    <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#understanding-variable-precedence>`
+    ansible's `variable precedence <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#understanding-variable-precedence>`_
     will make ansible choose the variables in the inventory file over the ones
     in the ``group_vars``.
 
@@ -187,7 +188,7 @@ Replace the old inventory with the new one, generated from terraform:
 .. code:: shell
 
     $ cd /projects/tf-workshop
-    $ terraform output inventory > /projects/ansible/inventory/hosts
+    $ terraform output -raw inventory > /projects/ansible/inventory/hosts
 
 .. admonition:: Task 5
 

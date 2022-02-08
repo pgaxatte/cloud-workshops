@@ -143,8 +143,9 @@ Let's start
 You are now ready to complete the workshop:
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 1
 
-   day1/index
-   day2/index
-   day3/index
+    index
+    day1/index
+    day2/index
+    day3/index
